@@ -17,7 +17,7 @@ func NewHTTPMux(s *APIServer) *router.Router {
 	// 托管集群管理 (名称为master),
 	//r.POST("/clusters", )
 	r.GET("/clusters", s.auth(s.getCluster))
-	//r.GET("/clusters/:cluster",)
+	r.GET("/clusters/:cluster", s.auth(s.getCluster))
 	//r.DELETE("/clusters/:cluster",)
 	//
 	//

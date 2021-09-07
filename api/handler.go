@@ -58,13 +58,17 @@ func (s *APIServer) getCluster(w http.ResponseWriter, r *http.Request, ps router
 		handler.ResError(w, handler.ErrorMsg(handler.ErrCodeServiceUnavailable,""))
 		return
 	}
-
-	if strings.HasPrefix(r.URL.Path, "/clusters") {
-		r.URL.Path = strings.Replace(r.URL.Path,
-			"/clusters", "apis/xwc.kubemc.io/v1/workloadclusters", 1)
-		r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", mux.BearerToken))
-		mux.ServeHTTP(w, r)
-	} else {
+	if !strings.HasPrefix(r.URL.Path, "/clusters") {
 		handler.NotFound(w, r)
+		return
 	}
+
+	r.URL.Path = "/apis/xwc.kubemc.io/v1/workloadclusters"
+	clusterName := ps.ByName("cluster")
+	if clusterName != "" {
+		r.URL.Path = r.URL.Path + "/" + clusterName
+	}
+	klog.Info(r.URL.Path)
+	r.Header.Set("Authorization", fmt.Sprintf("Bearer %s", mux.BearerToken))
+	mux.ServeHTTP(w, r)
 }
