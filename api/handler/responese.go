@@ -19,6 +19,23 @@ var (
 	Success StatusType = "Success"
 )
 
+
+func ResOK(w http.ResponseWriter, data interface{}) {
+	if data == nil {
+		data = genResJson(nil)
+	}
+
+	if body, err := json.MarshalIndent(data, "", " "); err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(body)
+	}
+
+
+}
+
 func ResError(w http.ResponseWriter, err error) {
 	res := genResJson(err)
 
@@ -26,7 +43,7 @@ func ResError(w http.ResponseWriter, err error) {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 	} else {
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(res.Code)
+		w.WriteHeader(res.Code/100)
 		w.Write(body)
 	}
 }

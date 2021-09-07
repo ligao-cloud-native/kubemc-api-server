@@ -10,6 +10,7 @@ const (
 	ErrCodeBadRequest   = 40000
 	ErrCodeUnauthorized = 40100
 	ErrCodeNotFound     = 40400
+	ErrCodeServiceUnavailable = 50300
 )
 
 var errText = map[int]string{
@@ -17,6 +18,7 @@ var errText = map[int]string{
 	ErrCodeBadRequest:   "Bad Request",
 	ErrCodeNotFound:     "Not Found",
 	ErrCodeUnauthorized: "Unauthorized",
+	ErrCodeServiceUnavailable: "ServiceUnavailable",
 }
 
 // ErrText returns a text for the status code. It returns the empty
@@ -29,8 +31,8 @@ func ErrText(code int) string {
 type MessageError struct {
 	Code    int
 	Status  StatusType
-	Message string
 	Reason  string
+	Message string
 }
 
 func (e *MessageError) Error() string {

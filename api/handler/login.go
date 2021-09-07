@@ -3,10 +3,27 @@ package handler
 import (
 	"github.com/ligao-cloud-native/kubemc-api-server/pkg/auth"
 	"k8s.io/klog/v2"
+	mathrand "math/rand"
 	"os"
+	"sync"
+	"time"
 )
 
-var provider auth.Provider
+var (
+	letters = []rune("abcdefgjijklmnopqrstuvwxyz0123456789")
+	lettersLen = len(letters)
+	rand = mathrand.New(mathrand.NewSource(time.Now().UTC().UnixNano()))
+	mutex sync.Mutex
+
+	provider auth.Provider
+)
+
+type AccessToken struct {
+	Token string `json:"access_token"`
+	ExpiresIn int `json:"expires_in"`
+	TokenType string `json:"token_type"`
+}
+
 
 // init auth provider
 func init() {
@@ -36,4 +53,25 @@ func AuthAccess(user, pwd string) bool {
 
 	return valid
 
+}
+
+func GetAccessToken(tokenLen int, tokenTTL int) AccessToken {
+	b := make([]rune, tokenLen)
+	for i := range b {
+		b[i] = letters[intn(lettersLen)]
+	}
+
+	return AccessToken{
+		Token: string(b),
+		ExpiresIn: tokenTTL,
+		TokenType: "bearer",
+	}
+
+}
+
+
+func intn(max int) int{
+	mutex.Lock()
+	defer mutex.Unlock()
+	return rand.Intn(max)
 }

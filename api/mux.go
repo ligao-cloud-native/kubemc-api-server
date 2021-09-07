@@ -13,9 +13,10 @@ func NewHTTPMux(s *APIServer) *router.Router {
 	// http://<xwc-apiserver-ip>:<port>/login
 	r.POST("/login", s.genAccessToken)
 
+
 	// 托管集群管理 (名称为master),
-	r.POST("/clusters", s.auth(s.getCluster))
-	//r.GET("/clusters",)
+	//r.POST("/clusters", )
+	r.GET("/clusters", s.auth(s.getCluster))
 	//r.GET("/clusters/:cluster",)
 	//r.DELETE("/clusters/:cluster",)
 	//

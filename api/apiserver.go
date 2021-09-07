@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"k8s.io/client-go/tools/cache"
 	"os"
-	"strings"
 	"sync"
 
 	"k8s.io/klog/v2"
@@ -103,18 +102,6 @@ func (s *APIServer) addManageClusterMux() {
 	s.Unlock()
 }
 
-func (s *APIServer) validateToken(token string) bool {
-	t := strings.Split(token, " ")
-	if len(t) == 2 && strings.ToLower(t[0]) == "bearer" {
-		if len(t[1]) == randTokenLen {
-			ok := s.Token.Get(t[1])
-			return ok != nil
-		}
-
-	}
-
-	return false
-}
 
 func deleteToken(token string) {}
 
