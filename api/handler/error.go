@@ -6,15 +6,17 @@ import (
 )
 
 const (
-	errCodeOK         = 20000
-	errCodeBadRequest = 40000
-	errCodeNotFound   = 40400
+	ErrCodeOK           = 20000
+	ErrCodeBadRequest   = 40000
+	ErrCodeUnauthorized = 40100
+	ErrCodeNotFound     = 40400
 )
 
 var errText = map[int]string{
-	errCodeOK:         "OK",
-	errCodeBadRequest: "Bad Request",
-	errCodeNotFound:   "Not Found",
+	ErrCodeOK:           "OK",
+	ErrCodeBadRequest:   "Bad Request",
+	ErrCodeNotFound:     "Not Found",
+	ErrCodeUnauthorized: "Unauthorized",
 }
 
 // ErrText returns a text for the status code. It returns the empty
@@ -35,18 +37,13 @@ func (e *MessageError) Error() string {
 	return fmt.Sprintf("[%v] %v", e.Code, e.Message)
 }
 
-func NewError(code int) error {
+func NewMsgError(code int, msg string) error {
 	return &MessageError{
 		Code:    code,
 		Status:  Failure,
-		Message: ErrText(code),
+		Message: msg,
 		Reason:  ErrText(code),
 	}
-}
-
-func NewMessageError(code int, msg string) error {
-	var e MessageError
-	return e
 }
 
 type StatusError struct {

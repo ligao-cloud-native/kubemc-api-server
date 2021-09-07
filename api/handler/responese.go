@@ -50,10 +50,10 @@ func genResJson(err error) *APIResponse {
 			resp.Reason = string(e.ErrStatus.Reason)
 
 		} else {
-			resp.Code = errCodeBadRequest
+			resp.Code = ErrCodeBadRequest
 			resp.Status = Failure
 			resp.Message = err.Error()
-			resp.Reason = ErrText(errCodeBadRequest)
+			resp.Reason = ErrText(ErrCodeBadRequest)
 		}
 
 	}
