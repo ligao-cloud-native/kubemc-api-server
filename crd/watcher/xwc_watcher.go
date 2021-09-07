@@ -13,8 +13,6 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/client-go/tools/clientcmd"
-	"os"
-
 	"k8s.io/klog/v2"
 	"time"
 )
@@ -30,19 +28,19 @@ type XwcWatcher struct {
 }
 
 func NewXwcWatcher() *XwcWatcher {
-	config, err := buildConfig("")
-	if err != nil {
-		klog.Errorf("Failed to build config, err: %v", err)
-		os.Exit(1)
-	}
-
-	kubeClient := kubernetes.NewForConfigOrDie(config)
-	dynamicClient := dynamic.NewForConfigOrDie(config)
-
-	XWCWatcher = &XwcWatcher{
-		kubeClient:    kubeClient,
-		dynamicClient: dynamicClient,
-	}
+	//config, err := buildConfig("")
+	//if err != nil {
+	//	klog.Errorf("Failed to build config, err: %v", err)
+	//	os.Exit(1)
+	//}
+	//
+	//kubeClient := kubernetes.NewForConfigOrDie(config)
+	//dynamicClient := dynamic.NewForConfigOrDie(config)
+	//
+	//XWCWatcher = &XwcWatcher{
+	//	kubeClient:    kubeClient,
+	//	dynamicClient: dynamicClient,
+	//}
 
 	return XWCWatcher
 
@@ -50,11 +48,11 @@ func NewXwcWatcher() *XwcWatcher {
 
 func (w *XwcWatcher) Start() {
 	// 添加所有的xwc实例
-	wcs, err := w.kubeClient.AppsV1().Deployments("").List(context.TODO(), metav1.ListOptions{})
-	if err != nil {
-		klog.Warningf("init workloadcluster resource error, %v", err)
-		return
-	}
+	//wcs, err := w.kubeClient.AppsV1().Deployments("").List(context.TODO(), metav1.ListOptions{})
+	//if err != nil {
+	//	klog.Warningf("init workloadcluster resource error, %v", err)
+	//	return
+	//}
 
 	//for _, wc := range wcs.Items {
 	//	// if status is success

@@ -8,6 +8,6 @@ import (
 func NotFound(w http.ResponseWriter, r *http.Request) {
 	klog.Infof("Request: ", r.RemoteAddr, r.URL.Scheme, r.Method, r.URL.RequestURI(), r.Proto)
 
-	ResError(w, NewMsgError(ErrCodeNotFound, ""))
+	ResError(w, ErrorMsg(ErrCodeNotFound, ""))
 
 }

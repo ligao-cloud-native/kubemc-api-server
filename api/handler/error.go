@@ -37,13 +37,24 @@ func (e *MessageError) Error() string {
 	return fmt.Sprintf("[%v] %v", e.Code, e.Message)
 }
 
-func NewMsgError(code int, msg string) error {
-	return &MessageError{
-		Code:    code,
-		Status:  Failure,
-		Message: msg,
-		Reason:  ErrText(code),
+
+func (e *MessageError) New(code int, msg string) error {
+	e.Code = code
+	e.Status = Failure
+	e.Reason = ErrText(code)
+	if msg != "" {
+		e.Message = msg
+	} else {
+		e.Message = ErrText(code)
 	}
+
+	return e
+}
+
+
+func ErrorMsg(code int, msg string) error {
+	var e MessageError
+	return e.New(code, msg)
 }
 
 type StatusError struct {

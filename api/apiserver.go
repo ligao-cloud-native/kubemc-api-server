@@ -72,9 +72,9 @@ func (s *APIServer) Run() {
 	go s.addManageClusterMux()
 
 	// start crd resource watcher
-	for _, watcher := range s.CRDWatcher {
-		go watcher.Start()
-	}
+	//for _, watcher := range s.CRDWatcher {
+	//	go watcher.Start()
+	//}
 
 	// start http server
 	mux := NewHTTPMux(s)
@@ -125,7 +125,7 @@ func getClusterToken() string {
 	if err != nil {
 		t := os.Getenv("XWC_CONTROL_PLANE_API_TOKEN")
 		if t == "" {
-			klog.Fatal("GET cluster token from env XWC_CONTROL_PLANE_API_TOKEN error")
+			klog.Error("GET cluster token from env XWC_CONTROL_PLANE_API_TOKEN error")
 		}
 
 		return t

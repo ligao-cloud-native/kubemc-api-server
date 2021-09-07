@@ -31,7 +31,8 @@ func (s *APIServer) genAccessToken(w http.ResponseWriter, r *http.Request, ps ro
 	user := r.PostFormValue("username")
 	pwd := r.PostFormValue("password")
 	if ok := handler.AuthAccess(user, pwd); !ok {
-		handler.ResError(w, handler.NewMsgError(handler.ErrCodeUnauthorized, "invalid username or password"))
+		handler.ResError(w, handler.ErrorMsg(handler.ErrCodeUnauthorized, "invalid username or password"))
+		return
 	}
 
 }
