@@ -20,6 +20,7 @@ var (
 )
 
 
+// ResOK response ok return k8s resource object
 func ResOK(w http.ResponseWriter, data interface{}) {
 	if data == nil {
 		data = genResJson(nil)
@@ -36,6 +37,7 @@ func ResOK(w http.ResponseWriter, data interface{}) {
 
 }
 
+// ResError response error return APIResponse object
 func ResError(w http.ResponseWriter, err error) {
 	res := genResJson(err)
 

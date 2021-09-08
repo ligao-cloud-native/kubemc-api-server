@@ -15,10 +15,11 @@ func NewHTTPMux(s *APIServer) *router.Router {
 
 
 	// 托管集群管理 (名称为master),
-	//r.POST("/clusters", )
+	r.POST("/clusters", s.auth(s.createCluster))
 	r.GET("/clusters", s.auth(s.getCluster))
 	r.GET("/clusters/:cluster", s.auth(s.getCluster))
-	//r.DELETE("/clusters/:cluster",)
+	r.PUT("/clusters/:cluster/scale", s.auth(s.scaleCluster))
+	r.DELETE("/clusters/:cluster", s.auth(s.deleteCluster))
 	//
 	//
 	//// 转发到k8s边缘集群的rest api （边缘集群名称为xwc名）

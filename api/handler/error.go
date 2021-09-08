@@ -8,9 +8,15 @@ import (
 const (
 	ErrCodeOK           = 20000
 	ErrCodeBadRequest   = 40000
+	ErrCodeInvalidParam =  40010
+	ErrCodeActionNotSupport = 40030
 	ErrCodeUnauthorized = 40100
 	ErrCodeNotFound     = 40400
+	ErrCodeUnprocessable = 42200
 	ErrCodeServiceUnavailable = 50300
+	ErrCodeClusterNotFound = 40430
+
+
 )
 
 var errText = map[int]string{
@@ -19,6 +25,10 @@ var errText = map[int]string{
 	ErrCodeNotFound:     "Not Found",
 	ErrCodeUnauthorized: "Unauthorized",
 	ErrCodeServiceUnavailable: "ServiceUnavailable",
+	ErrCodeUnprocessable: "Unprocessable",
+	ErrCodeClusterNotFound: "ClusterNotExist",
+	ErrCodeInvalidParam: "InvalidParam",
+	ErrCodeActionNotSupport: "ActionNotSupport",
 }
 
 // ErrText returns a text for the status code. It returns the empty
