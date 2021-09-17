@@ -143,7 +143,7 @@ func (s *APIServer) scaleCluster(w http.ResponseWriter, r *http.Request, ps rout
 
 	// if allow scale
 	var allowScale bool
-	if wc.Status.Phase == xwcv1.WorkloadClusterNSuccess ||
+	if wc.Status.Phase == xwcv1.WorkloadClusterSuccess ||
 		(forceScale && wc.Status.Phase == xwcv1.WorkloadClusterFailed ){
 		allowScale = true
 	}
